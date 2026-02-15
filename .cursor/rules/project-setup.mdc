@@ -1,0 +1,39 @@
+---
+description: 專案技術棧、RWD、README、Git 與 GitHub Pages 部署規範
+alwaysApply: true
+---
+
+# 專案設定與部署規範
+
+## 使用的框架與元件庫
+
+- **框架**: React + Vite
+- **Node 版本**: 專案根目錄需有 `.nvmrc`，內容為指定 Node 版本（例如 `20` 或 `18`）
+- **元件庫**: Material UI (MUI)
+
+## 注意事項
+
+- **套件選擇**: 實作前先搜尋網路上類似工具常用的套件，再決定依賴
+- **RWD**: 所有頁面需考量響應式設計（RWD），適配手機、平板、桌面
+- **版本控制**: 專案根目錄需有 `.gitignore`，至少排除：
+  - `node_modules/`
+  - 建置輸出（如 `dist/`）
+  - 環境變數檔（如 `.env`, `.env.local`）
+  - 編輯器/系統檔（如 `.DS_Store`, `*.log`）
+
+## README 必備內容
+
+README 需包含：
+
+- 專案介紹
+- 功能列表
+- 需求（含 Node 版本，並註明可透過 `.nvmrc` 使用 `nvm use`）
+- 安裝與啟動步驟
+- 部署步驟
+- 授權說明
+
+## GitHub Pages 部署
+
+- 使用 **GitHub Actions** 自動部署
+- 僅在 **master** branch 有變更時觸發 workflow
+- 建置與部署步驟寫在 `.github/workflows/` 下的 YAML（例如 `deploy.yml`）
