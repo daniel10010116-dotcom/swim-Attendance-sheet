@@ -144,7 +144,7 @@ export const dataStore = {
   ),
   updateCoachAccount: wrap(
     async (coachId, account, password) => {
-      await api.updateCoach(coachId, { account, password })
+      await api.updateCoach(coachId, account, password)
       return true
     },
     mockStore.updateCoachAccount
