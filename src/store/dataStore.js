@@ -159,7 +159,7 @@ export const dataStore = {
   ),
   updateStudentAccount: wrap(
     async (studentId, account, password) => {
-      await api.updateStudent(studentId, { account, password })
+      await api.updateStudent(studentId, account, password)
       return true
     },
     mockStore.updateStudentAccount
