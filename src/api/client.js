@@ -85,6 +85,9 @@ export const api = {
   async getStudents() {
     return request('GET', '/api/students')
   },
+  async getStudent(id) {
+    return request('GET', `/api/students/${id}`)
+  },
   async createStudent(name, account, password, contact = '') {
     return request('POST', '/api/students', { name, account, password, contact })
   },

@@ -58,8 +58,11 @@ export const dataStore = {
   getCoaches: wrap(api.getCoaches, mockStore.getCoaches),
   getStudent: wrap(
     async (id) => {
-      const list = await api.getStudents()
-      return list.find((s) => s.id === id) ?? null
+      try {
+        return await api.getStudent(id)
+      } catch (_) {
+        return null
+      }
     },
     mockStore.getStudent
   ),

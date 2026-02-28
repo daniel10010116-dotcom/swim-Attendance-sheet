@@ -11,6 +11,14 @@ router.get('/', requireRole('admin'), async (req, res) => {
   res.json(rows)
 })
 
+router.get('/:id', async (req, res) => {
+  const { id } = req.params
+  if (req.user.role !== 'admin' && (req.user.role !== 'student' || req.user.id !== id)) return res.status(403).json({ error: '權限不足' })
+  const row = await data.getStudent(id)
+  if (!row) return res.status(404).json({ error: '找不到學生' })
+  res.json(row)
+})
+
 router.post('/', requireRole('admin'), async (req, res) => {
   const { name, account, password, contact } = req.body || {}
   const trimmedAccount = (account || '').trim()
