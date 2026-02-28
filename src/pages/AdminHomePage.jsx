@@ -28,15 +28,19 @@ export default function AdminHomePage() {
   const [message, setMessage] = useState('')
 
   useEffect(() => {
-    dataStore.getStudents().then(setStudents)
+    dataStore.getStudents().then(setStudents).catch(() => setStudents([]))
     dataStore.getCoaches().then(async (list) => {
-      setCoaches(list)
+      setCoaches(list || [])
       const map = {}
       for (const c of list || []) {
-        map[c.id] = await dataStore.getCoachEarned(c.id)
+        try {
+          map[c.id] = await dataStore.getCoachEarned(c.id)
+        } catch {
+          map[c.id] = 0
+        }
       }
       setCoachEarned(map)
-    })
+    }).catch(() => setCoaches([]))
   }, [tick])
 
   const handleCreateCoach = async (e) => {
@@ -96,8 +100,8 @@ export default function AdminHomePage() {
       setAssignForm({ ...assignForm, courseName: '課程', totalLessons: 10, salaryWhenDone: 0 })
       setMessage('已分配課程')
       setTick((t) => t + 1)
-    } catch {
-      setMessage('分配失敗')
+    } catch (err) {
+      setMessage(err?.message || '分配失敗')
     }
   }
 
