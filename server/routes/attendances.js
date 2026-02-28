@@ -6,9 +6,16 @@ import { auditLog } from '../audit.js'
 const router = Router()
 router.use(requireAuth)
 
-router.get('/pending', requireRole('coach'), async (req, res) => {
-  const rows = await data.getPendingByCoach(req.user.id)
-  res.json(rows)
+router.get('/pending', async (req, res) => {
+  if (req.user.role === 'coach') {
+    const rows = await data.getPendingByCoach(req.user.id)
+    return res.json(rows)
+  }
+  if (req.user.role === 'student') {
+    const rows = await data.getPendingByStudent(req.user.id)
+    return res.json(rows)
+  }
+  return res.status(403).json({ error: '權限不足' })
 })
 
 router.post('/request', requireRole('student'), async (req, res) => {

@@ -192,6 +192,10 @@ export async function getPendingByCoach(coachId) {
   return run(() => db.prepare('SELECT * FROM pending_attendances WHERE coach_id = ? ORDER BY requested_at').all(coachId))
 }
 
+export async function getPendingByStudent(studentId) {
+  return run(() => db.prepare('SELECT * FROM pending_attendances WHERE student_id = ? ORDER BY requested_at').all(studentId))
+}
+
 export async function getPendingById(id) {
   return run(() => db.prepare('SELECT * FROM pending_attendances WHERE id = ?').get(id))
 }

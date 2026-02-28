@@ -212,6 +212,12 @@ export async function getPendingByCoach(coachId) {
   return data || []
 }
 
+export async function getPendingByStudent(studentId) {
+  const { data, error } = await supabase.from('pending_attendances').select('*').eq('student_id', studentId).order('requested_at')
+  if (error) throw error
+  return data || []
+}
+
 export async function getPendingById(id) {
   const { data, error } = await supabase.from('pending_attendances').select('*').eq('id', id).maybeSingle()
   if (error) throw error

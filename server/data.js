@@ -97,6 +97,9 @@ export async function deleteEnrollmentsWhereCoachAndRemainingZero(coachId) {
 export async function getPendingByCoach(coachId) {
   return (await getData()).getPendingByCoach(coachId)
 }
+export async function getPendingByStudent(studentId) {
+  return (await getData()).getPendingByStudent(studentId)
+}
 export async function getPendingById(id) {
   return (await getData()).getPendingById(id)
 }
