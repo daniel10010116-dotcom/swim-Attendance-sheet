@@ -32,6 +32,8 @@ export default function CoachSettingsPage() {
     try {
       await dataStore.updateCoachAccount(coachId, account.trim(), password.trim() || null)
       setPassword('')
+      const updated = await dataStore.getCoach(coachId)
+      if (updated) setAccount(updated.account ?? '')
     } catch (_) {}
   }
 

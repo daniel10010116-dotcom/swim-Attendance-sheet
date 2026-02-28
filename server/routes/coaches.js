@@ -66,15 +66,17 @@ router.put('/:id', async (req, res) => {
   if (!coach) return res.status(404).json({ error: '教練不存在' })
 
   const { account, password } = req.body || {}
-  const trimmedAccount = (account != null && account !== '') ? String(account).trim() : null
+  const trimmedAccount = (typeof account === 'string' && account.trim() !== '') ? account.trim() : null
+  const currentAccount = coach.account && typeof coach.account === 'string' ? coach.account : ''
+  const shouldUpdateAccount = trimmedAccount !== null && (trimmedAccount !== currentAccount || currentAccount === '[object Object]')
 
-  if (trimmedAccount !== null && trimmedAccount !== coach.account) {
+  if (shouldUpdateAccount) {
     const adminRow = await data.getAdminFirst()
     if (adminRow?.account === trimmedAccount) return res.status(400).json({ error: '此帳號已被使用' })
     if (await data.coachExistsByAccountExcludingId(trimmedAccount, id)) return res.status(400).json({ error: '此帳號已被使用' })
     if (await data.studentExistsByAccount(trimmedAccount)) return res.status(400).json({ error: '此帳號已被使用' })
     await data.updateCoachAccount(id, trimmedAccount)
-    await auditLog(req.user.id, req.user.role, 'UPDATE_ACCOUNT', 'coach', id, { account: coach.account }, { account: trimmedAccount })
+    await auditLog(req.user.id, req.user.role, 'UPDATE_ACCOUNT', 'coach', id, { account: currentAccount }, { account: trimmedAccount })
   }
   if (password != null && password !== '') {
     await data.updateCoachPassword(id, hashPassword(password))
