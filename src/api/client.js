@@ -60,6 +60,9 @@ export const api = {
   async getCoaches() {
     return request('GET', '/api/coaches')
   },
+  async getCoach(id) {
+    return request('GET', `/api/coaches/${id}`)
+  },
   async createCoach(name, account, password) {
     return request('POST', '/api/coaches', { name, account, password })
   },

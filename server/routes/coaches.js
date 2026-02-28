@@ -11,6 +11,14 @@ router.get('/', requireRole('admin'), async (req, res) => {
   res.json(rows)
 })
 
+router.get('/:id', async (req, res) => {
+  const { id } = req.params
+  if (req.user.role !== 'admin' && (req.user.role !== 'coach' || req.user.id !== id)) return res.status(403).json({ error: '權限不足' })
+  const row = await data.getCoach(id)
+  if (!row) return res.status(404).json({ error: '找不到教練' })
+  res.json(row)
+})
+
 router.get('/:id/earned', async (req, res) => {
   const { id } = req.params
   if (req.user.role !== 'admin' && (req.user.role !== 'coach' || req.user.id !== id)) return res.status(403).json({ error: '權限不足' })
