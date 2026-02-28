@@ -15,7 +15,9 @@ import adminRoutes from './routes/admin.js'
 
 const app = express()
 
-app.use(cors({ origin: process.env.CORS_ORIGIN || true, credentials: true }))
+// 允許前端網域（同源可省略；Vercel 部署網域請設 CORS_ORIGIN 或留空以接受請求來源）
+const corsOrigin = process.env.CORS_ORIGIN || true
+app.use(cors({ origin: corsOrigin, credentials: true, methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], allowedHeaders: ['Content-Type', 'Authorization'] }))
 app.use(cookieParser())
 app.use(express.json())
 

@@ -94,8 +94,13 @@ export const dataStore = {
   ),
   getCompletedSalaryDetails: wrap(
     async (coachId) => {
-      const list = await api.getCoachSalaryDetails(coachId)
-      return list || []
+      const list = await api.getCoachSalaryDetails(coachId) || []
+      return list.map((row) => ({
+        studentName: row.student_name ?? row.studentName ?? '',
+        courseName: row.course_name ?? row.courseName ?? '',
+        completedAt: row.completed_at ?? row.completedAt ?? null,
+        amount: row.amount ?? 0,
+      }))
     },
     mockStore.getCompletedSalaryDetails
   ),

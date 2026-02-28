@@ -182,7 +182,12 @@ export default function CoachHomePage() {
                     <TableRow key={i} sx={{ bgcolor: i % 2 ? '#F8FAFC' : '#FFFFFF' }}>
                       <TableCell sx={{ fontSize: 14 }}>{d.studentName}</TableCell>
                       <TableCell sx={{ fontSize: 14 }}>{d.courseName}</TableCell>
-                      <TableCell sx={{ fontSize: 14 }}>{new Date(d.completedAt).toLocaleDateString('zh-TW')}</TableCell>
+                      <TableCell sx={{ fontSize: 14 }}>
+                        {(() => {
+                          const t = d.completedAt ? new Date(d.completedAt) : null
+                          return t && !isNaN(t.getTime()) ? t.toLocaleDateString('zh-TW') : '－'
+                        })()}
+                      </TableCell>
                       <TableCell sx={{ fontSize: 14 }}>NT$ {d.amount}</TableCell>
                     </TableRow>
                   ))}
