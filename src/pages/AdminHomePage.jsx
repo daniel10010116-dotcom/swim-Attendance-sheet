@@ -298,6 +298,7 @@ export default function AdminHomePage() {
               <Box key={s.id} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', py: 1.5, borderBottom: '1px solid #F1F5F9', flexWrap: 'wrap', gap: 1 }}>
                 <Typography sx={{ fontSize: 14 }}>{s.name} · {s.account}</Typography>
                 <Box>
+                  <Button size="small" sx={{ color: '#0891B2', mr: 1 }} onClick={() => navigate(`/admin/student/${s.id}/settings`)}>帳號設定</Button>
                   <Button size="small" sx={{ color: '#0891B2', mr: 1 }} onClick={() => setResetTarget(s)}>重設密碼</Button>
                   <Button size="small" sx={{ color: '#DC2626' }} onClick={() => setDeleteTarget(s)}>刪除帳號</Button>
                 </Box>

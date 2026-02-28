@@ -7,6 +7,7 @@ import CoachHomePage from './pages/CoachHomePage'
 import AdminHomePage from './pages/AdminHomePage'
 import CoachPayPage from './pages/CoachPayPage'
 import CoachSettingsPage from './pages/CoachSettingsPage'
+import StudentSettingsPage from './pages/StudentSettingsPage'
 import { useAuth } from './contexts/AuthContext'
 import { dataStore } from './store/dataStore'
 
@@ -49,6 +50,7 @@ function AppRoutes() {
       <Route path="/admin" element={<PrivateRoute allowedRoles={['admin']}><AdminHomePage /></PrivateRoute>} />
       <Route path="/admin/coach/:coachId/pay" element={<PrivateRoute allowedRoles={['admin']}><CoachPayPage /></PrivateRoute>} />
       <Route path="/admin/coach/:coachId/settings" element={<PrivateRoute allowedRoles={['admin']}><CoachSettingsPage /></PrivateRoute>} />
+      <Route path="/admin/student/:studentId/settings" element={<PrivateRoute allowedRoles={['admin']}><StudentSettingsPage /></PrivateRoute>} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
